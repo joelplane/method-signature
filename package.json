@@ -1,0 +1,15 @@
+{
+  "author": "Joel Plane",
+  "name": "method-signature",
+  "description": "A clean-ish way to add type assertions to methods",
+  "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/joelplane/method-signature"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
