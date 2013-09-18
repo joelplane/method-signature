@@ -70,3 +70,30 @@ adder.add(38)    // => returns 42 - works fine
 adder.add('38'); // => throws an error with this message:
 // Type Error: Expected 1st argument of add() to be a number, but got 38 (string)
 ```
+
+Alterative and more flexible call signature:
+
+```javascript
+define(['method-signature'], function(sig) {
+
+  var s = SillyAdder, p = s.prototype;
+
+  function SillyAdder(num) {
+    this.num = num;
+  }
+
+  sig(p, 'add', ['number'], 'number'); // passing prototype as first param
+  p.add = function(anotherNum) {
+    return this.num + anotherNum;
+  };
+
+  sig(p, 'subtract', ['number'], 'number');
+  p.subtract = function(anotherNum) {
+    return this.num - anotherNum;
+  };
+
+  sig.enforce(); // no need to pass the prototype here
+
+  return s;
+});
+```
