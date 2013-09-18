@@ -64,7 +64,8 @@ var sig = require('../lib/method_signature');
   var SomeClass = (function(){
   var s = SomeClass, p = s.prototype;
 
-    function SomeClass() {
+    function SomeClass(num) {
+      sig.check(['number'], arguments);
     }
 
     sig(p, 'testMethod1', ['number'], 'number');
@@ -87,7 +88,7 @@ var sig = require('../lib/method_signature');
     return s;
   })();
 
-  var inst = new SomeClass();
+  var inst = new SomeClass(123);
 
   // tests for when we should not throw errors
 
@@ -96,6 +97,14 @@ var sig = require('../lib/method_signature');
   inst.testMethod3('123');
 
   // tests for when we *should* throw errors
+
+  helper.expectError(/Expected 1st argument to be a number/, function(){
+    new SomeClass();
+  });
+
+  helper.expectError(/Expected 1st argument to be a number/, function(){
+    new SomeClass("123");
+  });
 
   helper.expectError(/Expected 1st argument .* to be a number/, function(){
     inst.testMethod1('123');

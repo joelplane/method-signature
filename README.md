@@ -79,6 +79,7 @@ define(['method-signature'], function(sig) {
   var s = SillyAdder, p = s.prototype;
 
   function SillyAdder(num) {
+    sig.check(['number'], arguments);
     this.num = num;
   }
 
