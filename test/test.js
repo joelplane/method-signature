@@ -119,3 +119,51 @@ var sig = require('../lib/method_signature');
   });
 
 })();
+
+// test custom type rules
+(function(){
+  var SomeClass = (function(){
+  var s = SomeClass, p = s.prototype;
+
+    function SomeClass() {
+    }
+
+    sig(p, 'testMethod1', ['number[]'], 'number[]');
+    p.testMethod1 = function(num) {
+      return [123];
+    };
+
+    sig(p, 'testMethod2', ['number[]'], 'number[]');
+    p.testMethod2 = function(str) {
+      return 123;
+    };
+
+    sig.enforce();
+
+    return s;
+  })();
+
+  var inst = new SomeClass();
+
+  // tests for when we should not throw errors
+
+  inst.testMethod1([123]);
+
+  // tests for when we *should* throw errors
+
+  helper.expectError(/Expected 1st argument .* to be a number\[\]/, function(){
+    inst.testMethod1(123);
+  });
+
+  helper.expectError(/Expected return value .* to be a number\[\]/, function(){
+    inst.testMethod2([123]);
+  });
+
+  helper.expectError(/Expected 1st argument .* to be a number\[\]/, function(){
+    inst.testMethod1(['123']);
+  });
+
+})();
+
+
+

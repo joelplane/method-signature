@@ -2,7 +2,7 @@
   "author": "Joel Plane",
   "name": "method-signature",
   "description": "A clean-ish way to add type assertions to methods",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "repository": {
     "url": "https://github.com/joelplane/method-signature"
   },
